@@ -1,0 +1,87 @@
+﻿@model ViewModel
+@{
+    ViewData["Title"] = "Home Page";
+
+    string colorControl(Priority priority)
+    {
+        string result;
+
+        if (priority == Priority.High)
+        {
+            result = "#f3ffbf";
+        }
+
+        else if (priority == Priority.Medium)
+        {
+            result = "#adf7cf";
+        }
+
+        else if (priority == Priority.Low)
+        {
+            result = "#c2dffc";
+        }
+
+        else
+        {
+            result = "#ddded7";
+        }
+        return result;
+    }
+}
+@if (!Model.ListTasks.Any())
+{
+    <div class="text-center">
+        <h1 class="display-4">Oops!</h1>
+        <span>
+            Unfortunatly, there is no tasks in the to do list today.
+        </span>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <div>
+            <h2>
+                @ViewBag.Now
+            </h2>
+        </div>
+        <span></span>
+        @foreach (var task in Model.ListTasks)
+        {
+            <div class="container">
+                @if (@task.Status == true)
+                {
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="border border-@ViewBag.Theme rounded" style="background: @colorControl(task.Priority)">
+                                <del>
+                                    <span>@task.Summary</span>
+                                </del>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="btn btn-secondary btn-sm" href="~/Home/Today/@task.Id/@task.Priority" role="button">Start </a>
+                        </div>
+                    </div>
+                    <span> </span>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="border border-@ViewBag.Theme rounded" style="background: @colorControl(task.Priority)">
+                                <span>@task.Summary</span>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="btn btn-@ViewBag.Theme btn-sm" href="~/Home/Today/@task.Id" role="button">Finish</a>
+                        </div>
+                    </div>
+                    <span> </span>
+                }
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,54 @@
+﻿@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - To do List</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="centre-position bg-@ViewBag.Theme border-bottom">
+            <div class="container ">
+                <h1 class="display-4 text-white">To do list.</h1>
+            </div>
+        </nav>
+        <div>
+            <h1> </h1>
+        </div>
+    </header>
+
+    <div class="container d-flex">
+        <div class="btn-group-vertical">
+            <a class="btn btn-@ViewBag.Theme btn-lg" href="~/Home/Today" role="button">Today</a>
+            <a class="btn btn-@ViewBag.Theme btn-lg" href="~/Home/Add" role="button">Add</a>
+            <a class="btn btn-@ViewBag.Theme btn-lg" href="~/Home/MonthStatistic" role="button">Statistic</a>
+            <a class="btn btn-@ViewBag.Theme btn-lg" href="~/Home/Settings" role="button">Settings</a>
+            <a class="btn btn-@ViewBag.Theme btn-lg" href="~/Home/Index" role="button">Describtion</a>
+        </div>
+        <div>
+            <h1>   </h1>
+        </div>
+        <div class="container border border-@ViewBag.Theme rounded">
+            <main role="main" class="pb-3 centre-position ">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <div>
+        <h1>   </h1>
+    </div>
+    <footer class="border-top footer text-muted bg-@ViewBag.Theme">
+        <div class="container text-white">
+            &copy; 2020 - To do list - Daniyal Isakhanov
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

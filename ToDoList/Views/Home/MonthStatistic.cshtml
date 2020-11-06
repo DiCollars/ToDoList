@@ -1,0 +1,147 @@
+﻿@model ViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    string colorControl(Priority priority)
+    {
+        string result;
+
+        if (priority == Priority.High)
+        {
+            result = "#f3ffbf";
+        }
+
+        else if (priority == Priority.Medium)
+        {
+            result = "#adf7cf";
+        }
+
+        else if (priority == Priority.Low)
+        {
+            result = "#c2dffc";
+        }
+
+        else
+        {
+            result = "#ddded7";
+        }
+        return result;
+    }
+}
+
+@if (Model.ListCountDays == default)
+{
+    <div class="text-center">
+        <h1 class="display-4">
+            Choose month:
+        </h1>
+    </div>
+    <h1> </h1>
+    @for (int i = 0; i < 12; i = i + 3)
+    {
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-outline-@ViewBag.Theme btn-lg btn-block" href="~/Home/MonthStatistic/@Model.AllMonths[i].Key" role="button">@Model.AllMonths[i].Value</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-@ViewBag.Theme btn-lg btn-block" href="~/Home/MonthStatistic/@Model.AllMonths[i + 1].Key" role="button">@Model.AllMonths[i + 1].Value</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-@ViewBag.Theme btn-lg btn-block" href="~/Home/MonthStatistic/@Model.AllMonths[i + 2].Key" role="button">@Model.AllMonths[i + 2].Value</a>
+            </div>
+        </div>
+        <span> </span>
+    }
+}
+else if (Model.ListTasks != default)
+{
+    if (!Model.ListTasks.Any())
+    {
+        <div class="text-center">
+            <h1 class="display-4">
+                Ooops!
+            </h1>
+            <span>Unfortunatly there are no tasks in this day ☺.</span>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <h1 class="display-4">
+                Tasks:
+            </h1>
+        </div>
+        <div>
+            @foreach (var task in Model.ListTasks)
+            {
+                <div>
+                    @if (@task.Status == true)
+                    {
+                        <div class="row" style="justify-content:center;margin:auto;width:auto;">
+                            <div class="col-10">
+                                <div class="border border-@ViewBag.Theme rounded" style="background: @colorControl(task.Priority)">
+                                    <del>
+                                        <span>@task.Summary</span>
+                                    </del>
+                                </div>
+                            </div>
+                        </div>
+                        <span> </span>
+                    }
+                    else
+                    {
+                        <div class="row" style="justify-content:center;margin:auto;width:auto;">
+                            <div class="col-10">
+                                <div class="border border-@ViewBag.Theme rounded" style="background: @colorControl(task.Priority)">
+                                    <span>@task.Summary</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span> </span>
+                    }
+                </div>
+            }
+        </div>
+    }
+    <h1> </h1>
+    <a class="btn btn-outline-@ViewBag.Theme" href="~/Home/MonthStatistic/@ViewBag.Day" role="button">Back</a>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">
+            Choose day:
+        </h1>
+    </div>
+    <div>
+        <div class="d-flex text-white" style="justify-content:center;margin:auto;width:auto;">
+            @for (int i = 0; i < Model.ListCountDays.Length / 2; i++)
+            {
+                <div class="cube  bg-@ViewBag.Theme">
+                    <div>
+                        <p><small>@Model.ListCountDays[i].Item2.Day</small></p>
+                    </div>
+                    <div>
+                        <a href="~/Home/MonthStatistic/@Model.ListCountDays[i].Item2.Day/@Model.ListCountDays[i].Item2.Day" role="button"><p><small>@Model.ListCountDays[i].Item1</small></p></a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="d-flex text-white" style="justify-content:center;margin:auto;width:auto;">
+            @for (int i = Model.ListCountDays.Length / 2; i < Model.ListCountDays.Length; i++)
+            {
+                <div class="cube bg-@ViewBag.Theme">
+                    <div>
+                        <p><small>@Model.ListCountDays[i].Item2.Day</small></p>
+                    </div>
+                    <div>
+                        <a href="~/Home/MonthStatistic/@Model.ListCountDays[i].Item2.Month/@Model.ListCountDays[i].Item2.Day" role="button"><p><small>@Model.ListCountDays[i].Item1</small></p></a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <h1> </h1>
+    <a class="btn btn-outline-@ViewBag.Theme" href="~/Home/MonthStatistic" role="button">Back</a>
+}
+
+
